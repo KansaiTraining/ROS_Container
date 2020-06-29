@@ -1,0 +1,12 @@
+To set the ROS environment
+
+On one terminal run build_run_kinetic.sh
+Once inside you can call roscore there
+
+On another terminal run exec_run_kinetic.sh
+This will open a terminal already sourced.
+Now you have to go to your directory
+call catkin_make
+and source devel/setup.bash
+
+Then you can start executing nodes
