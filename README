@@ -10,3 +10,46 @@ call catkin_make
 and source devel/setup.bash
 
 Then you can start executing nodes
+---------------------------
+
+V2.
+
+First build a folder where your work space will be like"my_first_ws" and src inside of it
+
+Then we have to put that working directory where we 
+want to build our work in the "load_env_var.sh" file
+then on one terminal we run build_run_kinetic.sh
+once inside you can call roscore there
+
+From another terminal run exec_run_kinetic.sh
+This will open a terminal already sourced.
+Now you have to go to your directory
+call catkin_make
+and source devel/setup.bash
+
+sudo apt-get update
+sudo apt-get install ros-$(rosversion -d)-turtlesim 
+
+
+rosrun turtlesim turtlesim_node
+MESA-LOADER: failed to retrieve device information
+MESA-LOADER: failed to retrieve device information
+MESA-LOADER: failed to retrieve device information
+Couldn't get V3D IDENT0: No such device
+libEGL warning: DRI2: failed to create dri screen
+libEGL warning: DRI2: could not open /dev/dri/card1 (No such file or directory)
+[ERROR] [1593836282.436008446]: [registerPublisher] Failed to contact master at [localhost:11311].  Retrying...
+^C
+root@6305efd1dc3e:~/my_first_ws# rosrun turtlesim turtlesim_node
+MESA-LOADER: failed to retrieve device information
+MESA-LOADER: failed to retrieve device information
+MESA-LOADER: failed to retrieve device information
+Couldn't get V3D IDENT0: No such device
+libEGL warning: DRI2: failed to create dri screen
+libEGL warning: DRI2: could not open /dev/dri/card1 (No such file or directory)
+[ INFO] [1593836353.992125925]: Starting turtlesim with node name /turtlesim
+[ INFO] [1593836354.020814997]: Spawning turtle [turtle1] at x=[5.544445], y=[5.544445], theta=[0.000000]
+process 124: D-Bus library appears to be incorrectly set up; failed to read machine uuid: UUID file '/etc/machine-id' should contain a hex string of length 32, not length 0, with no other text
+See the manual page for dbus-uuidgen to correct this issue.
+[ WARN] [1593836869.873737095]: Oh no! I hit the wall! (Clamping from [x=7.345411, y=-0.027806])
+[ WARN] [1593836869.895151874]: Oh no
