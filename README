@@ -53,3 +53,128 @@ process 124: D-Bus library appears to be incorrectly set up; failed to read mach
 See the manual page for dbus-uuidgen to correct this issue.
 [ WARN] [1593836869.873737095]: Oh no! I hit the wall! (Clamping from [x=7.345411, y=-0.027806])
 [ WARN] [1593836869.895151874]: Oh no
+
+
+process 1924: D-Bus library appears to be incorrectly set up; 
+failed to read machine uuid: UUID file '/etc/machine-id' should contain a hex string of length 32,
+ not length 0, with no other text
+See the manual page for dbus-uuidgen to correct this issue.
+
+
+sudo apt-get install ros-$(rosversion -d)-rqt-graph 
+
+
+-----------------
+V3
+
+First build a folder where your work space will be like"my_first_ws" and src inside of it
+
+Then we have to put that working directory where we 
+want to build our work in the "load_env_var.sh" file
+then on one terminal we run build_run_kinetic.sh
+
+Once you are inside, make sure you are in the working directory (pwd)
+and run catkin_make
+
+You have created a workspace
+source your worskpace with source devel/setup.bash
+make sure with 
+echo $ROS_PACKAGE_PATH
+
+Now create a package
+
+go to src
+create the package like
+
+catkin_create_pkg my_awesome_code std_msgs rospy roscpp 
+
+cd to the previous directory
+and  catkin_make again
+
+For some reason (TO INVESTIGATE) when you do that the folders created are locked
+so youshould change permisions to chmod 777 to the folders you want
+
+put your files (talker and listener for example) in the src directory
+
+then modigy CMakeLists.txt with
+add_executable(talker  src/talker.cpp)
+target_link_libraries(talker ${catkin_LIBRARIES})
+#add_dependencies(talker beginner_tutorials_generate_messages_cpp)
+
+add_executable(listener  src/listener.cpp)
+target_link_libraries(listener ${catkin_LIBRARIES})
+
+
+and then from the up folder do agan catkin_make
+
+
+
+
+once inside you can call roscore there
+
+From another terminal run exec_run_kinetic.sh
+This will open a terminal already sourced.
+you then source devel/setup.bash
+
+in the terminal run rosrun my_awesome_code talker
+
+in another terminal do the same and do rosrun my_awesome_code listener
+
+
+Services
+=========
+
+1. Define the service file in the folder srv in your package (in our case AddTwoInts.srv)
+
+2. Compile the service file to generate the source code
+  Modify the package.xml
+  <build_depend>message_generation</build_depend>
+  <exec_depend>message_runtime</exec_depend>
+ 
+  in CMakeLists.txt
+  find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  rospy
+  std_msgs
+  message_generation
+)
+
+add_service_files(
+   FILES
+   AddTwoInts.srv
+ )
+
+ generate_messages(
+   DEPENDENCIES
+   std_msgs
+ )
+
+ go to workspace folder and call catkin_make
+ 
+ the h files will be generated in my_first_ws/devel/include/my_awesome_code
+ 
+ 3. Write the services (add_two_ints_server.cpp and add_two_ints_client.cpp)
+ 
+ 4. Modify CMakeList.txt
+ 
+ add_executable(add_two_ints_server  src/add_two_ints_server.cpp)
+target_link_libraries(add_two_ints_server ${catkin_LIBRARIES})
+add_dependencies(add_two_ints_server my_awesome_code_gencpp)
+
+add_executable(add_two_ints_client  src/add_two_ints_client.cpp)
+target_link_libraries(add_two_ints_client ${catkin_LIBRARIES})
+add_dependencies(add_two_ints_client my_awesome_code_gencpp)
+
+5.catkin_make
+
+6. after roscore call
+   rosrun my_awesome_code add_two_ints_server
+   and then 
+   rosrun my_awesome_code add_two_ints_client 5 3
+[ INFO] [1593873909.025046052]: Sum: 8
+
+rosrun my_awesome_code add_two_ints_server 
+[ INFO] [1593873872.883526995]: Ready to add two ints.
+[ INFO] [1593873909.024255207]: request: x=5, y=3
+[ INFO] [1593873909.024344352]: sending back response: [8]
+
